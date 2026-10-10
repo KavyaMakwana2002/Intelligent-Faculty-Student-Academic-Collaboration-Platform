@@ -1,17 +1,19 @@
 const db = require('../db');
 
 exports.createAssignment = (req, res) => {
-    const { title, course, semester, subject, marks, due_date, description, topic } = req.body;
+    console.log("RECEIVED BODY:", req.body);
+    const { title, course, semester, subject, marks, due_date, dueDate, description, topic } = req.body;
     const faculty_id = req.user.id;
     const file_url = req.file ? '/uploads/' + req.file.filename : null;
+    const finalDueDate = due_date || dueDate;
 
     if (!course || !semester) return res.status(400).json({ error: 'Course and Semester are required' });
 
     const stmt = db.prepare('INSERT INTO assignments (title, course, semester, marks, due_date, description, faculty_id, subject, file_url, topic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run([title, course, semester, marks, due_date, description, faculty_id, subject, file_url, topic || 'General'], function(err) {
+        stmt.run([title, course, semester, marks, finalDueDate, description, faculty_id, subject, file_url, topic || 'General'], function(err) {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Database error' });
+            return res.status(500).json({ error: 'Database error: ' + err.message });
         }
         res.status(201).json({ message: 'Assignment created', id: this.lastID });
     });
