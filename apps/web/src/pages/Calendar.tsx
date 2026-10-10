@@ -1,21 +1,30 @@
 
 export default function Calendar() {
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in-up pb-10">
-      <h1 className="text-3xl font-extrabold text-slate-900 mb-8">Academic Calendar</h1>
-      <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
-         <div className="grid grid-cols-7 gap-4 mb-4 text-center font-bold text-slate-500 text-sm">
-            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
-         </div>
-         <div className="grid grid-cols-7 gap-4">
-            {Array.from({length: 30}).map((_, i) => (
-               <div key={i} className={`h-24 rounded-2xl border ${i===15 ? 'bg-indigo-50 border-indigo-200' : 'border-slate-100'} p-2 hover:border-indigo-300 transition-colors relative group`}>
-                  <span className={`font-bold ${i===15 ? 'text-indigo-600' : 'text-slate-700'}`}>{i+1}</span>
-                  {i===15 && <div className="mt-2 text-[10px] font-bold bg-indigo-600 text-white p-1 rounded-md leading-tight">Hackathon Submission</div>}
-                  {i===18 && <div className="mt-2 text-[10px] font-bold bg-rose-500 text-white p-1 rounded-md leading-tight">Assignment Due</div>}
-               </div>
-            ))}
-         </div>
+    <div className="max-w-5xl mx-auto space-y-6 animate-fade-in-up pb-10">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900">Academic Calendar</h1>
+          <p className="text-slate-500 font-medium mt-1">BCA Academic Calendar 2026-2027</p>
+        </div>
+        <a href="/Academic_Calendar.pdf" download className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-sm">
+          Download PDF
+        </a>
+      </div>
+      
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-2 overflow-hidden h-[800px]">
+         <object 
+            data="/Academic_Calendar.pdf" 
+            type="application/pdf" 
+            width="100%" 
+            height="100%"
+            className="rounded-2xl"
+         >
+            <div className="flex flex-col items-center justify-center h-full text-slate-500">
+               <p className="mb-4 font-bold text-lg">Your browser doesn't support PDF viewing.</p>
+               <a href="/Academic_Calendar.pdf" target="_blank" className="text-indigo-600 underline font-semibold">Click here to view the PDF</a>
+            </div>
+         </object>
       </div>
     </div>
   );
