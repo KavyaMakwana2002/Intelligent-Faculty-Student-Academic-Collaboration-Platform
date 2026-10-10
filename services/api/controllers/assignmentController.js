@@ -7,7 +7,7 @@ exports.createAssignment = (req, res) => {
     const file_url = req.file ? '/uploads/' + req.file.filename : null;
     const finalDueDate = due_date || dueDate;
 
-    if (!course || !semester) return res.status(400).json({ error: 'Course and Semester are required' });
+    if (!course || !semester || !finalDueDate) return res.status(400).json({ error: `Missing required fields. Received body: ${JSON.stringify(req.body)}` });
 
     const stmt = db.prepare('INSERT INTO assignments (title, course, semester, marks, due_date, description, faculty_id, subject, file_url, topic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         stmt.run([title, course, semester, marks, finalDueDate, description, faculty_id, subject, file_url, topic || 'General'], function(err) {
