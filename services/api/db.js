@@ -35,6 +35,16 @@ const db = new sqlite3.Database(dbPath, (err) => {
             file_url TEXT,
             status TEXT DEFAULT 'Pending'
         )`);
+        db.run(`CREATE TABLE IF NOT EXISTS materials (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            course TEXT NOT NULL,
+            semester TEXT NOT NULL,
+            description TEXT,
+            file_url TEXT,
+            faculty_id INTEGER,
+            uploaded_at TEXT
+        )`);
     }
 });
 
