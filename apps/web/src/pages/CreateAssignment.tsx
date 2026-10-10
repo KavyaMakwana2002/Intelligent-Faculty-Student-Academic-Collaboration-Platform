@@ -9,6 +9,7 @@ export default function CreateAssignment() {
   const [error, setError] = useState<string | null>(null);
 
   const [title, setTitle] = useState('');
+  const [topic, setTopic] = useState('General');
   const [course, setCourse] = useState('');
   const [semester, setSemester] = useState('');
   const [subject, setSubject] = useState('');
@@ -26,6 +27,7 @@ export default function CreateAssignment() {
       const token = localStorage.getItem('token');
       const formData = new FormData();
       formData.append('title', title);
+      formData.append('topic', topic);
       formData.append('course', course);
       formData.append('semester', semester);
       formData.append('subject', subject);
@@ -64,9 +66,15 @@ export default function CreateAssignment() {
         )}
         
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">Assignment Title</label>
-            <input required value={title} onChange={e=>setTitle(e.target.value)} type="text" placeholder="e.g. Build a React Dashboard" className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700">Assignment Title</label>
+              <input required value={title} onChange={e=>setTitle(e.target.value)} type="text" placeholder="e.g. Build a React Dashboard" className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700">Knowledge Topic / Tag</label>
+              <input required value={topic} onChange={e=>setTopic(e.target.value)} type="text" placeholder="e.g. Dynamic Programming" className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
