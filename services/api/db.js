@@ -26,10 +26,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
             title TEXT NOT NULL,
             course TEXT NOT NULL,
             semester TEXT NOT NULL,
+            subject TEXT,
             marks INTEGER NOT NULL,
             due_date TEXT NOT NULL,
             description TEXT,
+            topic TEXT DEFAULT 'General',
             faculty_id INTEGER,
+            file_url TEXT,
             status TEXT DEFAULT 'Pending'
         )`);
     }
