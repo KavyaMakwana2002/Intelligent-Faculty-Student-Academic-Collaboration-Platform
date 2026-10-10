@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Book, GraduationCap, Briefcase, ShieldCheck, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
-type RoleType = 'student' | 'faculty' | 'admin' | null;
+type RoleType = 'student' | 'faculty' | null;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -116,14 +116,7 @@ export default function Register() {
                 </div>
               </button>
 
-              <button onClick={() => setRole('admin')} className="group w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 hover:border-emerald-400/50 p-4 rounded-xl text-white transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20">
-                <div className="flex items-center gap-4">
-                  <div className="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-lg group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <span className="font-semibold text-lg">Admin</span>
-                </div>
-              </button>
+              
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 animate-fade-in-up" style={{ animationDuration: '0.4s' }}>
