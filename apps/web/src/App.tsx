@@ -3,29 +3,22 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/layout/Layout';
 import Landing from './pages/Landing';
 import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
 import StudentDashboard from './pages/dashboard/StudentDashboard';
 import FacultyDashboard from './pages/dashboard/FacultyDashboard';
-import AdminDashboard from './pages/dashboard/AdminDashboard';
-
-// Placeholder Pages
-const Placeholder = ({ title }: { title: string }) => (
-  <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col items-center justify-center">
-    <h1 className="text-2xl font-bold text-slate-800 mb-2">{title}</h1>
-    <p className="text-slate-500">This page is under construction for the demo.</p>
-  </div>
-);
-
-const Courses = () => <Placeholder title="Courses" />;
-const Assignments = () => <Placeholder title="Assignments" />;
-const Materials = () => <Placeholder title="Study Materials" />;
-const Announcements = () => <Placeholder title="Announcements" />;
-const Discussions = () => <Placeholder title="Discussions" />;
-const Calendar = () => <Placeholder title="Academic Calendar" />;
-const Analytics = () => <Placeholder title="Analytics" />;
-const Notifications = () => <Placeholder title="Notifications" />;
-const Profile = () => <Placeholder title="Profile" />;
-const Settings = () => <Placeholder title="Settings" />;
-const NotFound = () => <Placeholder title="404 - Not Found" />;
+import Courses from './pages/Courses';
+import Assignments from './pages/Assignments';
+import CreateAssignment from './pages/CreateAssignment';
+import AssignmentDetails from './pages/AssignmentDetails';
+import Materials from './pages/Materials';
+import Announcements from './pages/Announcements';
+import Discussions from './pages/Discussions';
+import Calendar from './pages/Calendar';
+import Analytics from './pages/Analytics';
+import Notifications from './pages/Notifications';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -40,19 +33,21 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       
       <Route element={<Layout />}>
         <Route path="/dashboard" element={
           <ProtectedRoute>
             {user?.role === 'student' && <StudentDashboard />}
             {user?.role === 'faculty' && <FacultyDashboard />}
-            {user?.role === 'admin' && <AdminDashboard />}
+            
           </ProtectedRoute>
         } />
         
         <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
         <Route path="/assignments" element={<ProtectedRoute><Assignments /></ProtectedRoute>} />
+        <Route path="/assignments/create" element={<ProtectedRoute><CreateAssignment /></ProtectedRoute>} />
+        <Route path="/assignments/:id" element={<ProtectedRoute><AssignmentDetails /></ProtectedRoute>} />
         <Route path="/materials" element={<ProtectedRoute><Materials /></ProtectedRoute>} />
         <Route path="/announcements" element={<ProtectedRoute><Announcements /></ProtectedRoute>} />
         <Route path="/discussions" element={<ProtectedRoute><Discussions /></ProtectedRoute>} />
@@ -61,8 +56,10 @@ function AppRoutes() {
         <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="*" element={<NotFound />} />
       </Route>
+      
+      {/* 404 Catch All */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

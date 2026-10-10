@@ -2,6 +2,7 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogOut, Book, LayoutDashboard, Settings, User as UserIcon, FileText, MessageSquare, Bell, Calendar, BarChart2, Search } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import AiChatWidget from '../AiChatWidget';
 
 export default function Layout() {
   const { user, logout } = useAuth();
@@ -40,7 +41,7 @@ export default function Layout() {
           </Link>
           <div className="mt-6 flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-white shadow-sm flex items-center justify-center text-indigo-700 font-bold">
-               {user?.name.charAt(0)}
+               {user?.name?.charAt(0) || 'U'}
             </div>
             <div>
               <p className="font-semibold text-slate-800 text-sm leading-tight">{user?.name}</p>
@@ -110,6 +111,7 @@ export default function Layout() {
           <Outlet />
         </div>
       </main>
+      <AiChatWidget />
     </div>
   );
 }
