@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Book, GraduationCap, Briefcase, ShieldCheck, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
+import { Book, GraduationCap, Briefcase, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
 type RoleType = 'student' | 'faculty' | null;
@@ -19,7 +19,6 @@ export default function Register() {
   const [phone, setPhone] = useState('');
   const [course, setCourse] = useState('');
   const [semester, setSemester] = useState('');
-  const [position, setPosition] = useState(''); // HOD/DEAN
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -36,10 +35,9 @@ export default function Register() {
     try {
       const payload = {
         role, name, email, phone, password,
-        identifier: role !== 'admin' ? identifier : undefined,
+        identifier,
         course: role === 'student' ? course : undefined,
-        semester: role === 'student' ? semester : undefined,
-        position: role === 'admin' ? position : undefined
+        semester: role === 'student' ? semester : undefined
       };
       
       await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/register`, payload);
@@ -132,7 +130,6 @@ export default function Register() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {role !== 'admin' && (
                   <div>
                     <label className="block text-sm font-medium text-indigo-200 mb-1">
                       {role === 'student' && "Enrollment Number"}
@@ -140,13 +137,6 @@ export default function Register() {
                     </label>
                     <input type="text" required value={identifier} onChange={e=>setIdentifier(e.target.value)} className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="ID/Number" />
                   </div>
-                )}
-                {role === 'admin' && (
-                  <div>
-                    <label className="block text-sm font-medium text-indigo-200 mb-1">Position</label>
-                    <input type="text" required value={position} onChange={e=>setPosition(e.target.value)} className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g. HOD / Dean" />
-                  </div>
-                )}
                 <div>
                   <label className="block text-sm font-medium text-indigo-200 mb-1">Phone Number</label>
                   <input type="tel" required value={phone} onChange={e=>setPhone(e.target.value)} className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="+91 9876543210" />
